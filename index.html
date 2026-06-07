@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>РосЗалив | Юридическая помощь при заливах квартир</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Хедер (липкий) -->
+    <header class="header" id="header">
+      <div class="container">
+        <div class="header-inner">
+          <div class="logo" id="logoLink">
+            <i class="fas fa-water"></i>
+            <span>РосЗалив</span>
+          </div>
+          <div class="burger" id="burgerBtn"><i class="fas fa-bars"></i></div>
+          <div class="header-contact" id="headerContact">
+            <a href="tel:+79163614034"
+              ><i class="fas fa-phone-alt"></i> +7 (916) 361-40-34</a
+            >
+            <a href="mailto:v-ivanov05@mail.ru"
+              ><i class="fas fa-envelope"></i> v-ivanov05@mail.ru</a
+            >
+            <button class="btn btn-primary" id="consultBtnHeader">
+              Бесплатная консультация
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero блок -->
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <h1>Поможем получить выплату за залив квартиры без предоплаты</h1>
+            <p>
+              Юридическая компания с большим опытом. Специализируемся на
+              заливах. Работаем по всей России.
+            </p>
+            <button class="btn btn-primary" id="heroFormBtn">
+              Бесплатно оценить ущерб
+            </button>
+          </div>
+          <div class="hero-image">
+            <!-- <img
+              src="https://placehold.co/600x400/2A5C9A/white?text=Эксперт+с+планшетом"
+              alt="Эксперт в залитой квартире"
+              loading="lazy"
+            /> -->
+            <img src="static/rain&house.jpg" alt="залитый дом" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Блок доверия (цифры) -->
+      <section>
+        <div class="container">
+          <h2 class="section-title">
+            Нам доверяют, потому что мы отвечаем за результат и не берем
+            предоплату
+          </h2>
+          <div class="cards-grid">
+            <article class="card">
+              <div class="stat-number">18+ лет</div>
+              <div>Средний опыт юристов компании</div>
+            </article>
+            <article class="card">
+              <div class="stat-number">7 542 дела</div>
+              <div>Успешно завершено в 2022–2025 гг.</div>
+            </article>
+            <article class="card">
+              <div class="stat-number">100%</div>
+              <div>Собственных экспертов-оценщиков</div>
+            </article>
+            <article class="card">
+              <div class="stat-number">2 недели</div>
+              <div>Средний срок досудебного урегулирования</div>
+            </article>
+            <article class="card">
+              <div class="stat-number">89 городов</div>
+              <div>География присутствия</div>
+            </article>
+            <article class="card">
+              <div class="stat-number">0 рублей</div>
+              <div>Предоплата — платите только за результат</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Акции и спецпредложения -->
+      <section class="bg-gray">
+        <div class="container">
+          <h2 class="section-title">Получите максимум выгоды уже сегодня</h2>
+          <div class="cards-grid">
+            <article class="card">
+              <i
+                class="fas fa-gavel"
+                style="font-size: 2rem; color: var(--accent)"
+              ></i>
+              <h3>Бесплатная консультация юриста</h3>
+              <p>
+                При первом обращении — полный разбор ситуации, оценка перспектив
+                и план действий.
+              </p>
+              <button class="btn btn-outline consult-trigger">
+                Записаться на консультацию
+              </button>
+            </article>
+            <article class="card">
+              <i
+                class="fas fa-hand-holding-usd"
+                style="font-size: 2rem; color: var(--accent)"
+              ></i>
+              <h3>Взыскание ущерба без предоплаты</h3>
+              <p>
+                Вы платите процент только после поступления денег на ваш счёт.
+                Если проиграли — ничего не должны.
+              </p>
+              <button class="btn btn-outline consult-trigger">
+                Узнать условия
+              </button>
+            </article>
+            <article class="card">
+              <i
+                class="fas fa-search"
+                style="font-size: 2rem; color: var(--accent)"
+              ></i>
+              <h3>Бесплатная экспертиза при заключении договора</h3>
+              <p>
+                Выезд эксперта в течение 24 часов, акт осмотра, фотофиксация и
+                расчёт ущерба — за наш счёт.
+              </p>
+              <button class="btn btn-outline consult-trigger">
+                Заказать экспертизу
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Услуги с вкладками -->
+      <section>
+        <div class="container">
+          <h2 class="section-title">Юридическая помощь в любой ситуации</h2>
+          <div class="tabs" id="servicesTabs">
+            <button class="tab-btn active" data-tab="fiz">
+              Физическим лицам
+            </button>
+            <button class="tab-btn" data-tab="ur">Юридическим лицам</button>
+          </div>
+          <div id="fiz-pane" class="tab-pane active-pane">
+            <ul class="service-list">
+              <li>
+                <i class="fas fa-microscope"></i> Техническая экспертиза причин
+                залива
+              </li>
+              <li>
+                <i class="fas fa-chart-line"></i> Оценка ущерба от залива
+                квартиры
+              </li>
+              <li>
+                <i class="fas fa-file-signature"></i> Подготовка претензий и
+                исковых заявлений
+              </li>
+              <li>
+                <i class="fas fa-gavel"></i> Представление интересов в суде по
+                заливам
+              </li>
+              <li>
+                <i class="fas fa-building"></i> Споры с управляющей компанией /
+                ТСЖ
+              </li>
+              <li>
+                <i class="fas fa-hand-holding-usd"></i> Взыскание со страховой
+                компании
+              </li>
+              <li>
+                <i class="fas fa-bankrupt"></i> Банкротство физических лиц
+              </li>
+            </ul>
+          </div>
+          <div id="ur-pane" class="tab-pane">
+            <ul class="service-list">
+              <li>
+                <i class="fas fa-briefcase"></i> Арбитражные споры (заливы
+                коммерческой недвижимости)
+              </li>
+              <li>
+                <i class="fas fa-registered"></i> Регистрация компаний (ООО, ИП,
+                зарубежная)
+              </li>
+              <li>
+                <i class="fas fa-chart-pie"></i> Корпоративное право и налоговое
+                планирование
+              </li>
+              <li>
+                <i class="fas fa-handshake"></i> Сопровождение сделок с
+                недвижимостью
+              </li>
+              <li>
+                <i class="fas fa-balance-scale"></i> Представление интересов в
+                судах всех инстанций
+              </li>
+            </ul>
+          </div>
+          <div style="text-align: center; margin-top: 32px">
+            <button class="btn btn-primary consult-trigger">
+              Записаться на консультацию
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Кейсы с вкладками -->
+      <section class="bg-gray">
+        <div class="container">
+          <h2 class="section-title">Примеры нашей работы — цифры и победы</h2>
+          <div class="tabs" id="caseTabs">
+            <button class="tab-btn active" data-case="case-zaliv">
+              Заливы квартир
+            </button>
+            <button class="tab-btn" data-case="case-uk">Споры с УК</button>
+            <button class="tab-btn" data-case="case-bankrot">
+              Банкротство физ. лиц
+            </button>
+          </div>
+          <div id="case-zaliv-pane" class="tab-pane active-pane">
+            <div class="cards-grid">
+              <article class="card">
+                <h3>Залив из вышерасположенной квартиры</h3>
+                <p>
+                  Проблема: виновный отказывался платить. Сумма иска 450 000
+                  руб.
+                </p>
+                <p>
+                  <strong>Результат:</strong> взыскано 487 000 руб. + моральный
+                  вред. Срок — 3 месяца.
+                </p>
+                <button
+                  class="btn-outline consult-trigger"
+                  style="margin-top: 12px"
+                >
+                  Подробнее
+                </button>
+              </article>
+              <article class="card">
+                <h3>Лопнувшая труба в стене</h3>
+                <p>
+                  УК заявила, что зона ответственности собственника. Суд обязал
+                  УК выплатить 230 000 руб. + замена стояка.
+                </p>
+                <button class="btn-outline consult-trigger">Подробнее</button>
+              </article>
+            </div>
+          </div>
+          <div id="case-uk-pane" class="tab-pane">
+            <div class="cards-grid">
+              <article class="card">
+                <h3>Завышенный норматив отопления</h3>
+                <p>Перерасчёт 78 000 руб., штраф 50% в пользу клиента.</p>
+                <button class="btn-outline consult-trigger">Подробнее</button>
+              </article>
+              <article class="card">
+                <h3>Залив из подвала, УК отказалась фиксировать</h3>
+                <p>Независимая экспертиза, взыскано 156 000 руб.</p>
+                <button class="btn-outline consult-trigger">Подробнее</button>
+              </article>
+            </div>
+          </div>
+          <div id="case-bankrot-pane" class="tab-pane">
+            <div class="cards-grid">
+              <article class="card">
+                <h3>Долги 1,2 млн руб.</h3>
+                <p>
+                  Полное списание долгов, имущество сохранено (единственное
+                  жильё).
+                </p>
+                <button class="btn-outline consult-trigger">Подробнее</button>
+              </article>
+              <article class="card">
+                <h3>Микрозаймы + кредиты 890 тыс.</h3>
+                <p>Банкротство завершено за 6 месяцев, долги обнулены.</p>
+                <button class="btn-outline consult-trigger">Подробнее</button>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Преимущества -->
+      <section>
+        <div class="container">
+          <h2 class="section-title">6 причин выбрать нас</h2>
+          <div class="cards-grid">
+            <article class="card">
+              <i class="fas fa-hand-peace fa-2x"></i>
+              <h3>Делегируйте проблему</h3>
+              <p>Вы можете переложить проблему на нас и забыть про нее.</p>
+            </article>
+            <article class="card">
+              <i class="fas fa-hard-hat fa-2x"></i>
+              <h3>Собственная экспертиза</h3>
+              <p>Выезжаем в течение 24ч. Эксперты в штате.</p>
+            </article>
+            <article class="card">
+              <i class="fas fa-coins fa-2x"></i>
+              <h3>Работаем без предоплаты</h3>
+              <p>Гонорар успеха — платите только в случае победы.</p>
+            </article>
+            <article class="card">
+              <i class="fas fa-user-graduate fa-2x"></i>
+              <h3>Юристы с профильным стажем</h3>
+              <p>Специализация только на заливах / спорах с УК.</p>
+            </article>
+            <article class="card">
+              <i class="fas fa-chart-line fa-2x"></i>
+              <h3>Сложные случаи</h3>
+              <p>Ищем выход при отсутствии виновного, истекших сроках.</p>
+            </article>
+            <article class="card">
+              <i class="fas fa-file-contract fa-2x"></i>
+              <h3>Полное сопровождение под ключ</h3>
+              <p>От осмотра до получения денег на карту.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Цены -->
+      <section class="bg-gray">
+        <div class="container">
+          <h2 class="section-title">Прозрачные цены без скрытых наценок</h2>
+          <div class="cards-grid">
+            <article class="card">
+              <i class="fas fa-chart-line fa-2x"></i>
+              <h3>Взыскание ущерба после залива</h3>
+              <p>Оплата % от выигранной суммы после получения денег</p>
+              <button class="btn btn-outline consult-trigger">
+                Рассчитать стоимость
+              </button>
+            </article>
+            <article class="card">
+              <i class="fas fa-calculator fa-2x"></i>
+              <h3>Оценка ущерба</h3>
+              <p>
+                <span class="price-old">10 000 руб.</span>
+                <span class="price-new">0 руб.</span> бесплатно при договоре на
+                взыскание
+              </p>
+              <button class="btn btn-outline consult-trigger">
+                Заказать экспертизу
+              </button>
+            </article>
+            <article class="card">
+              <i class="fas fa-file-alt fa-2x"></i>
+              <h3>Помощь в получении акта о заливе</h3>
+              <p>10 000 руб. При подписании договора — бесплатно</p>
+              <button class="btn btn-outline consult-trigger">
+                Получить консультацию
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Этапы работы -->
+      <section>
+        <div class="container">
+          <h2 class="section-title">Как мы работаем — 5 простых шагов</h2>
+          <div class="cards-grid">
+            <article class="card">
+              <div class="stat-number">1</div>
+              <h3>Оставляете заявку</h3>
+              <p>Специалист свяжется в течение 5 минут.</p>
+            </article>
+            <article class="card">
+              <div class="stat-number">2</div>
+              <h3>Бесплатная консультация</h3>
+              <p>Анализ ситуации, шансы, сроки.</p>
+            </article>
+            <article class="card">
+              <div class="stat-number">3</div>
+              <h3>Выезд эксперта + договор</h3>
+              <p>Осмотр, подписание договора с оплатой за результат.</p>
+            </article>
+            <article class="card">
+              <div class="stat-number">4</div>
+              <h3>Сбор доказательств</h3>
+              <p>Экспертиза, претензия, иск.</p>
+            </article>
+            <article class="card">
+              <div class="stat-number">5</div>
+              <h3>Получение выплаты</h3>
+              <p>Деньги на ваш счёт — оплата гонорара.</p>
+            </article>
+          </div>
+          <div style="text-align: center; margin-top: 32px">
+            <button class="btn btn-primary consult-trigger">
+              Оставить заявку сейчас
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Гарантии -->
+      <section class="bg-gray">
+        <div class="container" style="text-align: center">
+          <i
+            class="fas fa-shield-alt"
+            style="font-size: 4rem; color: var(--green)"
+          ></i>
+          <h2>Мы работаем за результат — без предоплаты</h2>
+          <p style="max-width: 700px; margin: 20px auto">
+            Если мы проигрываем дело — вы не платите нам ничего. Все риски на
+            нас. Выплата только после фактического получения вами денег. Пункт о
+            гонораре успеха прописан в договоре.
+          </p>
+        </div>
+      </section>
+
+      <!-- FAQ аккордеон (одиночное раскрытие) -->
+      <section>
+        <div class="container">
+          <h2 class="section-title">Ответы на частые вопросы</h2>
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <div class="accordion-question">
+                Что делать при заливе квартиры в первую очередь?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="accordion-answer">
+                1. Перекройте воду. 2) Вызовите УК для акта. 3) Сфотографируйте
+                повреждения. 4) Не делайте ремонт до экспертизы. 5) Обратитесь к
+                нам.
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-question">
+                Сколько времени занимает взыскание ущерба?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="accordion-answer">
+                В среднем от 5 до 12 месяцев. Досудебное урегулирование 1-2
+                месяца.
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-question">
+                Какие документы нужны для экспертизы?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="accordion-answer">
+                Акт осмотра от УК (или отказ), фото/видео. Остальное подготовим
+                сами.
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-question">
+                Что если виновный не согласен и не платит?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="accordion-answer">
+                Подготовим экспертизу, претензию, иск. Решение принудительно
+                исполнят приставы.
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-question">
+                Взимаете ли вы плату, если дело проиграно?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="accordion-answer">
+                Нет. По договору «гонорар успеха» платите только фактический
+                результат.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Чек-лист с формой (email) -->
+      <section class="bg-gray">
+        <div class="container">
+          <h2 class="section-title">
+            Скачайте бесплатный чек-лист: «Что делать при заливе квартиры за 5
+            шагов»
+          </h2>
+          <div class="checklist-form">
+            <form id="checklistForm" class="inline-form">
+              <input
+                type="email"
+                id="checklistEmail"
+                placeholder="Ваш Email"
+                required
+              />
+              <button type="submit" class="btn btn-primary">
+                📥 Скачать PDF
+              </button>
+            </form>
+            <div id="checklistMsg" class="form-message"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Блог -->
+      <section>
+        <div class="container">
+          <h2 class="section-title">Полезные статьи по теме</h2>
+          <div class="cards-grid">
+            <article class="card">
+              <img
+                src="https://placehold.co/400x200/eef2f6/2A5C9A?text=Залив"
+                style="width: 100%; border-radius: 20px"
+                loading="lazy"
+              />
+              <h3>Залив квартиры: как доказать вину УК</h3>
+              <p>15 марта 2025</p>
+              <p>Разбираем судебную практику: когда стояк — общее имущество.</p>
+              <a href="#">Читать далее →</a>
+            </article>
+            <article class="card">
+              <img
+                src="https://placehold.co/400x200/eef2f6/2A5C9A?text=Страховая"
+                style="width: 100%; border-radius: 20px"
+                loading="lazy"
+              />
+              <h3>Как получить страховую выплату при заливе</h3>
+              <p>02 февраля 2025</p>
+              <p>Пошаговая инструкция по досудебной претензии.</p>
+              <a href="#">Читать далее →</a>
+            </article>
+            <article class="card">
+              <img
+                src="https://placehold.co/400x200/eef2f6/2A5C9A?text=Банкротство"
+                style="width: 100%; border-radius: 20px"
+                loading="lazy"
+              />
+              <h3>Банкротство физлиц в 2025 году</h3>
+              <p>10 января 2025</p>
+              <p>Новые правила, порог долга, сохранение имущества.</p>
+              <a href="#">Читать далее →</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Контакты и форма -->
+      <section class="bg-gray">
+        <div class="container">
+          <h2 class="section-title">
+            Свяжитесь с нами — разберём вашу ситуацию бесплатно
+          </h2>
+          <div class="contact-wrapper">
+            <div class="contact-left">
+              <div class="map-container">
+                <iframe
+                  src="https://yandex.ru/map-widget/v1/?um=constructor%3A9b3c2f4e1a5b7c8d9e0f&source=constructor"
+                  width="100%"
+                  height="250"
+                  frameborder="0"
+                ></iframe>
+              </div>
+              <p><i class="fas fa-phone"></i> +7 (916) 361-40-34</p>
+              <p><i class="fas fa-envelope"></i> v-ivanov05@mail.ru</p>
+              <div class="social-icons">
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-vk"></i></a>
+              </div>
+            </div>
+            <div class="contact-right">
+              <form id="contactFormFooter">
+                <div class="form-group">
+                  <input type="text" id="footerName" placeholder="Ваше имя" />
+                  <div class="field-error" id="footerNameError"></div>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="tel"
+                    id="footerPhone"
+                    placeholder="Номер телефона"
+                  />
+                  <div class="field-error" id="footerPhoneError"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Отправить заявку
+                </button>
+                <div id="footerFormMsg" class="form-message"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div><i class="fas fa-water"></i> РосЗалив © 2025</div>
+        <div>
+          <a href="tel:+79163614034">+7 (916) 361-40-34</a><br /><a
+            href="mailto:v-ivanov05@mail.ru"
+            >v-ivanov05@mail.ru</a
+          >
+        </div>
+        <div>
+          <button class="btn btn-outline" id="footerCallBtn">
+            Заказать звонок</button
+          ><br /><a href="#">Политика конфиденциальности</a><br /><a href="#"
+            >Согласие на обработку</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- Плавающая кнопка телефона (мобильные) -->
+    <div class="floating-phone" id="floatingPhone">
+      <a href="tel:+79163614034"><i class="fas fa-phone-alt"></i></a>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="consultModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>Бесплатная консультация</h3>
+        <form id="modalForm">
+          <div class="form-group">
+            <input type="text" id="modalName" placeholder="Имя" />
+            <div class="field-error" id="modalNameError"></div>
+          </div>
+          <div class="form-group">
+            <input type="tel" id="modalPhone" placeholder="Телефон" />
+            <div class="field-error" id="modalPhoneError"></div>
+          </div>
+          <button type="submit" class="btn btn-primary">Отправить</button>
+          <div id="modalFormMsg" class="form-message"></div>
+        </form>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
