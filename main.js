@@ -35,10 +35,10 @@ window.addEventListener("click", (e) => {
   if (e.target === modal) closeModal();
 });
 
-// Таймер 20 секунд (ТЗ)
+// Таймер 20 секунд
 setTimeout(() => {
   openModal();
-}, 1 * 20000);
+}, 20000);
 
 // ======================== Общая функция отправки (имитация Битрикс) ========================
 function sendToCRM(data, callback) {
@@ -176,14 +176,21 @@ if (checklistForm) {
 
 // ======================== Бургер-меню ========================
 const burger = document.getElementById("burgerBtn");
-const headerContact = document.getElementById("headerContact");
+const headerNav = document.getElementById("headerNav");
+const headerRight = document.querySelector(".header-right");
 burger.addEventListener("click", () => {
-  headerContact.classList.toggle("mobile-open");
+  headerNav.classList.toggle("mobile-open");
+  headerRight.classList.toggle("mobile-open");
 });
 
 // ======================== Логотип (прокрутка вверх) ========================
 document.getElementById("logoLink")?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// ======================== Кнопка "Стать партнёром" ========================
+document.getElementById("partnerBtn")?.addEventListener("click", () => {
+  alert("Спасибо за интерес! Скоро мы свяжемся с вами для оформления партнёрства.");
 });
 
 // ======================== Заглушка для метрик ========================
