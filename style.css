@@ -895,10 +895,52 @@ textarea {
   }
 }
 
-@media (max-width: 900px) {
-}
-
 @media (max-width: 768px) {
+  /* ======================== Анимация для бургер-меню ======================== */
+  .header-nav,
+  .header-right {
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top center;
+  }
+
+  /* Анимация появления мобильного меню */
+  .header-nav.mobile-open,
+  .header-right.mobile-open {
+    animation: mobileMenuSlideDown 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes mobileMenuSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-12px) scale(0.97);
+      max-height: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      max-height: 800px;
+    }
+  }
+
+  /* Анимация скрытия мобильного меню */
+  .header-nav:not(.mobile-open),
+  .header-right:not(.mobile-open) {
+    animation: mobileMenuSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes mobileMenuSlideUp {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      max-height: 800px;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-12px) scale(0.97);
+      max-height: 0;
+    }
+  }
+
   .floating-phone {
     display: flex;
   }
