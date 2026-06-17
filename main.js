@@ -25,7 +25,7 @@ function closeModal() {
 }
 document
   .querySelectorAll(
-    ".consult-trigger, #consultBtnHeader, #heroFormBtn, #footerCallBtn",
+    ".consult-trigger, #consultBtnHeader, #heroFormBtn, #footerCallBtnFooter",
   )
   .forEach((btn) => {
     btn.addEventListener("click", openModal);
@@ -75,30 +75,137 @@ function validateName(name, errorId) {
   return true;
 }
 
-// Валидация телефона (минимум 10 цифр)
+// ======================== Функции для работы с телефоном ========================
+
+// Очистка номера от всех нецифровых символов
+function cleanPhoneNumber(value) {
+  return value.replace(/\D/g, "");
+}
+
+// Валидация телефона: +79????????? или 89????????? (11 цифр после кода)
 function validatePhone(phone, errorId) {
-  const digits = phone.replace(/\D/g, "");
-  if (digits.length < 10) {
-    showFieldError(
-      errorId,
-      "Введите корректный номер телефона (не менее 10 цифр)",
-    );
+  const digits = cleanPhoneNumber(phone);
+
+  // Проверяем, что номер начинается с 7 или 8 и имеет 11 цифр
+  if (digits.length !== 11) {
+    showFieldError(errorId, "Введите корректный номер телефона (11 цифр)");
     return false;
   }
+
+  // Проверяем, что номер начинается с 7 или 8
+  if (!digits.startsWith("7") && !digits.startsWith("8")) {
+    showFieldError(errorId, "Номер должен начинаться с +7 или 8");
+    return false;
+  }
+
   showFieldError(errorId, "");
   return true;
 }
 
-// Валидация email
-function validateEmail(email, errorId) {
-  const re = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
-  if (!email || !re.test(email)) {
-    showFieldError(errorId, "Введите корректный email");
-    return false;
+// Автоформатирование номера телефона в формате +7 (9??) ???-??-??
+function formatPhoneNumber(value) {
+  const digits = cleanPhoneNumber(value);
+
+  // Если номер пустой, возвращаем пустую строку
+  if (digits.length === 0) return "";
+
+  // Определяем код страны: если начинается с 8, заменяем на 7
+  let normalized = digits;
+  if (normalized.startsWith("8")) {
+    normalized = "7" + normalized.slice(1);
+  } else if (normalized.startsWith("7")) {
+    // уже норм
+  } else {
+    // если не начинается с 7 или 8, просто возвращаем как есть
+    return value;
   }
-  showFieldError(errorId, "");
-  return true;
+
+  // Форматируем: +7 (XXX) XXX-XX-XX
+  let formatted = "+7";
+
+  if (normalized.length > 1) {
+    formatted += " (" + normalized.slice(1, 4);
+  } else if (normalized.length === 1) {
+    formatted += " ";
+    return formatted;
+  }
+
+  if (normalized.length >= 4) {
+    formatted += ") " + normalized.slice(4, 7);
+  } else if (normalized.length > 1) {
+    formatted += ")";
+    return formatted;
+  }
+
+  if (normalized.length >= 7) {
+    formatted += "-" + normalized.slice(7, 9);
+  }
+
+  if (normalized.length >= 9) {
+    formatted += "-" + normalized.slice(9, 11);
+  }
+
+  return formatted;
 }
+
+// Автоформатирование при вводе
+function setupPhoneFormatting(inputElement) {
+  if (!inputElement) return;
+
+  inputElement.addEventListener("input", function (e) {
+    const cursorPosition = this.selectionStart;
+    const rawValue = this.value;
+    const digits = cleanPhoneNumber(rawValue);
+
+    // Если ввели 8, автоматически меняем на +7
+    if (digits.length === 1 && digits.startsWith("8")) {
+      // Ничего не делаем, дадим пользователю ввести 8, потом заменим
+    }
+
+    // Форматируем
+    const formatted = formatPhoneNumber(rawValue);
+
+    // Обновляем значение, если оно изменилось
+    if (formatted !== rawValue) {
+      this.value = formatted;
+
+      // Сохраняем позицию курсора
+      const newCursorPos =
+        cursorPosition + (formatted.length - rawValue.length);
+      this.setSelectionRange(newCursorPos, newCursorPos);
+    }
+  });
+
+  // При потере фокуса - финальное форматирование
+  inputElement.addEventListener("blur", function () {
+    const digits = cleanPhoneNumber(this.value);
+    if (digits.length === 11) {
+      this.value = formatPhoneNumber(this.value);
+    }
+  });
+}
+
+// Получение чистого номера для отправки (+7XXXXXXXXXX)
+function getCleanPhoneForCRM(value) {
+  const digits = cleanPhoneNumber(value);
+  if (digits.startsWith("8")) {
+    return "+7" + digits.slice(1);
+  }
+  if (digits.startsWith("7")) {
+    return "+7" + digits.slice(1);
+  }
+  return digits;
+}
+
+// ======================== Инициализация автоформатирования ========================
+
+// Настройка форматирования для всех полей телефона
+document.addEventListener("DOMContentLoaded", function () {
+  const phoneInputs = document.querySelectorAll('input[type="tel"]');
+  phoneInputs.forEach((input) => {
+    setupPhoneFormatting(input);
+  });
+});
 
 // ======================== Форма модального окна ========================
 const modalForm = document.getElementById("modalForm");
@@ -106,12 +213,15 @@ const modalMsg = document.getElementById("modalFormMsg");
 modalForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const name = document.getElementById("modalName").value.trim();
-  const phone = document.getElementById("modalPhone").value.trim();
+  const phoneInput = document.getElementById("modalPhone");
+  const phone = phoneInput.value.trim();
   const isNameValid = validateName(name, "modalName");
   const isPhoneValid = validatePhone(phone, "modalPhone");
   if (!isNameValid || !isPhoneValid) return;
 
-  sendToCRM({ name, phone, form: "modal" }, (res) => {
+  // Отправляем очищенный номер
+  const cleanPhone = getCleanPhoneForCRM(phone);
+  sendToCRM({ name, phone: cleanPhone, form: "modal" }, (res) => {
     modalMsg.textContent = res.message;
     modalMsg.className = "form-message " + (res.success ? "success" : "error");
     if (res.success) {
@@ -132,12 +242,15 @@ const footerMsg = document.getElementById("footerFormMsg");
 footerForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const name = document.getElementById("footerName").value.trim();
-  const phone = document.getElementById("footerPhone").value.trim();
+  const phoneInput = document.getElementById("footerPhone");
+  const phone = phoneInput.value.trim();
   const isNameValid = validateName(name, "footerName");
   const isPhoneValid = validatePhone(phone, "footerPhone");
-  if (!isNameValid || !isPhoneValid) return;
+  const isConsentValid = validateConsent("footerConsent", "footerConsent");
+  if (!isNameValid || !isPhoneValid || !isConsentValid) return;
 
-  sendToCRM({ name, phone, form: "footer" }, (res) => {
+  const cleanPhone = getCleanPhoneForCRM(phone);
+  sendToCRM({ name, phone: cleanPhone, form: "footer" }, (res) => {
     footerMsg.textContent = res.message;
     footerMsg.className = "form-message " + (res.success ? "success" : "error");
     if (res.success) {
@@ -174,6 +287,20 @@ if (checklistForm) {
   });
 }
 
+// ======================== Валидация чекбокса согласия ========================
+function validateConsent(checkboxId, errorId) {
+  const checkbox = document.getElementById(checkboxId);
+  if (!checkbox || !checkbox.checked) {
+    showFieldError(
+      errorId,
+      "Необходимо дать согласие на обработку персональных данных",
+    );
+    return false;
+  }
+  showFieldError(errorId, "");
+  return true;
+}
+
 // ======================== Бургер-меню ========================
 const burger = document.getElementById("burgerBtn");
 const headerNav = document.getElementById("headerNav");
@@ -184,13 +311,15 @@ burger.addEventListener("click", () => {
 });
 
 // ======================== Логотип (прокрутка вверх) ========================
-document.getElementById("logoLink")?.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+// document.getElementById("logoLink")?.addEventListener("click", () => {
+//   window.scrollTo({ top: 0, behavior: "smooth" });
+// });
 
 // ======================== Кнопка "Стать партнёром" ========================
 document.getElementById("partnerBtn")?.addEventListener("click", () => {
-  alert("Спасибо за интерес! Скоро мы свяжемся с вами для оформления партнёрства.");
+  alert(
+    "Спасибо за интерес! Скоро мы свяжемся с вами для оформления партнёрства.",
+  );
 });
 
 // ======================== Заглушка для метрик ========================

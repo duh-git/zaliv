@@ -22,10 +22,10 @@
     <header class="header" id="header">
       <div class="container">
         <div class="header-inner">
-          <div class="logo" id="logoLink">
+          <a href="/" class="logo" id="logoLink">
             <i class="fas fa-water"></i>
             <span>МосЗалив</span>
-          </div>
+          </a>
 
           <!-- Навигация -->
           <nav class="header-nav" id="headerNav">
@@ -501,7 +501,7 @@
                   <span class="compare-label">Исполнительное производство</span>
                   <span class="compare-price">20 000 ₽</span>
                 </li>
-                <li class="compare-guarantee">
+                <li class="compare-guarantee compare-guarantee-danger">
                   <span class="compare-label">Гарантия:</span> Отсутствует. В
                   случае поражения вы заплатите за работу, которая не привела к
                   результату
@@ -797,6 +797,25 @@
                   />
                   <div class="field-error" id="footerPhoneError"></div>
                 </div>
+                <!-- Чекбокс согласия -->
+                <div class="form-group checkbox-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="footerConsent" required />
+                    <span class="checkmark"></span>
+                    <p>
+                      Я даю своё согласие на обработку персональных данных в
+                      соответствии с
+                      <a href="docs/user-agreement.html" target="_blank"
+                        >Пользовательским соглашением</a
+                      >
+                      и
+                      <a href="docs/personal-data.html" target="_blank"
+                        >Положением о персональных данных</a
+                      >
+                    </p>
+                  </label>
+                  <div class="field-error" id="footerConsentError"></div>
+                </div>
                 <button type="submit" class="btn btn-primary">
                   Отправить заявку
                 </button>
@@ -812,36 +831,46 @@
                   frameborder="0"
                 ></iframe>
               </div>
-              <div class="social-icons">
-                <a href="https://wa.me/79163614034" target="_blank"
-                  ><i class="fab fa-whatsapp"></i
-                ></a>
-                <a href="https://t.me/@vladisla_v_5" target="_blank"
-                  ><i class="fab fa-telegram"></i
-                ></a>
-                <!-- <a href="#" target="_blank"><i class="fab fa-vk"></i></a> -->
-                <a
-                  href="https://max.ru/u/f9LHodD0cOIyTwIZrAmEfDZfKD6sqa1zW0gKLsLTZyfTxxnqUVKTUJ-sDfg"
-                  target="_blank"
-                >
-                  <svg
-                    width="24.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 720 720"
+              <div class="contacts-wrapper">
+                <p>Социальные сети:</p>
+                <div class="social-icons">
+                  <a href="https://wa.me/79163614034" target="_blank"
+                    ><i class="fab fa-whatsapp"></i
+                  ></a>
+                  <a href="https://t.me/@vladisla_v_5" target="_blank"
+                    ><i class="fab fa-telegram"></i
+                  ></a>
+                  <a
+                    href="https://max.ru/u/f9LHodD0cOIyTwIZrAmEfDZfKD6sqa1zW0gKLsLTZyfTxxnqUVKTUJ-sDfg"
+                    target="_blank"
                   >
-                    <path
-                      fill="#2a5c9a"
-                      d="M350.4,9.6C141.8,20.5,4.1,184.1,12.8,390.4c3.8,90.3,40.1,168,48.7,253.7,2.2,22.2-4.2,49.6,21.4,59.3,31.5,11.9,79.8-8.1,106.2-26.4,9-6.1,17.6-13.2,24.2-22,27.3,18.1,53.2,35.6,85.7,43.4,143.1,34.3,299.9-44.2,369.6-170.3C799.6,291.2,622.5-4.6,350.4,9.6h0ZM269.4,504c-11.3,8.8-22.2,20.8-34.7,27.7-18.1,9.7-23.7-.4-30.5-16.4-21.4-50.9-24-137.6-11.5-190.9,16.8-72.5,72.9-136.3,150-143.1,78-6.9,150.4,32.7,183.1,104.2,72.4,159.1-112.9,316.2-256.4,218.6h0Z"
-                    />
-                  </svg>
-                </a>
+                    <svg
+                      width="24.5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 720 720"
+                    >
+                      <path
+                        fill="#2a5c9a"
+                        d="M350.4,9.6C141.8,20.5,4.1,184.1,12.8,390.4c3.8,90.3,40.1,168,48.7,253.7,2.2,22.2-4.2,49.6,21.4,59.3,31.5,11.9,79.8-8.1,106.2-26.4,9-6.1,17.6-13.2,24.2-22,27.3,18.1,53.2,35.6,85.7,43.4,143.1,34.3,299.9-44.2,369.6-170.3C799.6,291.2,622.5-4.6,350.4,9.6h0ZM269.4,504c-11.3,8.8-22.2,20.8-34.7,27.7-18.1,9.7-23.7-.4-30.5-16.4-21.4-50.9-24-137.6-11.5-190.9,16.8-72.5,72.9-136.3,150-143.1,78-6.9,150.4,32.7,183.1,104.2,72.4,159.1-112.9,316.2-256.4,218.6h0Z"
+                      />
+                    </svg>
+                  </a>
+                </div>
               </div>
-              <a href="tel:+79163614034"
-                ><i class="fas fa-phone"></i> +7 (916) 361-40-34</a
-              >
-              <a href="mailto:v-ivanov05@mail.ru"
-                ><i class="fas fa-envelope"></i> v-ivanov05@mail.ru</a
-              >
+              <br />
+              <div class="contacts-wrapper">
+                <p>Телефон:</p>
+                <a href="tel:+79163614034"
+                  ><i class="fas fa-phone"></i> +7 (916) 361-40-34</a
+                >
+              </div>
+              <br />
+              <div class="contacts-wrapper">
+                <p>Почта:</p>
+                <a href="mailto:v-ivanov05@mail.ru"
+                  ><i class="fas fa-envelope"></i> v-ivanov05@mail.ru</a
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -873,9 +902,6 @@
                 aria-label="Telegram"
                 ><i class="fab fa-telegram"></i
               ></a>
-              <!-- <a href="#" target="_blank" aria-label="ВКонтакте"
-                ><i class="fab fa-vk"></i
-              ></a> -->
               <a
                 href="https://max.ru/u/f9LHodD0cOIyTwIZrAmEfDZfKD6sqa1zW0gKLsLTZyfTxxnqUVKTUJ-sDfg"
                 target="_blank"
@@ -914,17 +940,17 @@
             <h4>Информация</h4>
             <ul class="footer-links">
               <li>
-                <a href="docs/privacy-policy.html"
+                <a href="/docs/privacy-policy.html"
                   >Политика конфиденциальности</a
                 >
               </li>
               <li>
-                <a href="docs/personal-data.html"
+                <a href="/docs/personal-data.html"
                   >Положение о персональных данных</a
                 >
               </li>
               <li>
-                <a href="docs/user-agreement.html"
+                <a href="/docs/user-agreement.html"
                   >Пользовательское соглашение</a
                 >
               </li>
