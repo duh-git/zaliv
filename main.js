@@ -1,25 +1,8 @@
-// ======================== Вкладки (Услуги) ========================
-const servicesTabs = document.querySelectorAll("#servicesTabs .tab-btn");
-const panes = {
-  fiz: document.getElementById("fiz-pane"),
-  ur: document.getElementById("ur-pane"),
-};
-servicesTabs.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    servicesTabs.forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    const tabId = btn.getAttribute("data-tab");
-    Object.values(panes).forEach((p) => p.classList.remove("active-pane"));
-    panes[tabId].classList.add("active-pane");
-  });
-});
-
 // ======================== Вкладки (Кейсы) ========================
 const caseTabs = document.querySelectorAll("#caseTabs .tab-btn");
 const casePanes = {
   "case-zaliv": document.getElementById("case-zaliv-pane"),
   "case-uk": document.getElementById("case-uk-pane"),
-  "case-bankrot": document.getElementById("case-bankrot-pane"),
 };
 caseTabs.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -28,18 +11,6 @@ caseTabs.forEach((btn) => {
     const caseId = btn.getAttribute("data-case");
     Object.values(casePanes).forEach((p) => p.classList.remove("active-pane"));
     casePanes[caseId].classList.add("active-pane");
-  });
-});
-
-// ======================== Аккордеон (одиночное раскрытие) ========================
-const accordionItems = document.querySelectorAll(".accordion-item");
-accordionItems.forEach((item) => {
-  const question = item.querySelector(".accordion-question");
-  question.addEventListener("click", () => {
-    const isOpen = item.classList.contains("open");
-    // Закрываем все
-    accordionItems.forEach((i) => i.classList.remove("open"));
-    if (!isOpen) item.classList.add("open");
   });
 });
 
@@ -67,7 +38,7 @@ window.addEventListener("click", (e) => {
 // Таймер 20 секунд (ТЗ)
 setTimeout(() => {
   openModal();
-}, 20000);
+}, 1 * 20000);
 
 // ======================== Общая функция отправки (имитация Битрикс) ========================
 function sendToCRM(data, callback) {
