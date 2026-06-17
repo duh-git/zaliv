@@ -345,6 +345,10 @@ del {
 .compare-label {
   font-weight: 500;
 }
+.partner-price {
+  font-weight: 700;
+  color: var(--accent);
+}
 .compare-price {
   font-weight: 700;
   color: var(--primary-dark);
