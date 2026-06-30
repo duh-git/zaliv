@@ -1,3 +1,12 @@
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
 * {
   margin: 0;
   padding: 0;
