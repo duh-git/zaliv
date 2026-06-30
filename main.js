@@ -1,7 +1,7 @@
 // ======================== Вкладки (Кейсы) ========================
 const caseTabs = document.querySelectorAll("#caseTabs .tab-btn");
 const casePanes = {
-  "case-zaliv": document.getElementById("case-zaliv-pane"),
+  // "case-zaliv": document.getElementById("case-zaliv-pane"),
   "case-uk": document.getElementById("case-uk-pane"),
 };
 caseTabs.forEach((btn) => {
