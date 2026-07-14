@@ -41,17 +41,73 @@ setTimeout(() => {
 }, 20000);
 
 // ======================== Общая функция отправки (имитация Битрикс) ========================
-function sendToCRM(data, callback) {
-  console.log("Отправка в Битрикс24:", data);
-  setTimeout(
-    () =>
+// function sendToBroker(data, callback) {
+//   console.log("Отправка:", data);
+//   setTimeout(
+//     () =>
+//       callback({
+//         success: true,
+//         message: "Заявка принята, мы свяжемся в течение 5 минут",
+//       }),
+//     500,
+//   );
+// }
+
+/**
+ * Отправляет данные формы в Google Apps Script
+ * @param {Object} data - объект с данными формы (например, {name: 'Иван', phone: '123'})
+ * @param {Function} callback - функция, которая получит результат {success, message}
+ */
+function sendToBroker(data, callback) {
+  // Ваш URL из Apps Script
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxVs72rpF130_CR4YSt3rIAx5Ye-bc7fooW47vlS4F8J0--E8i42axSxoyHXEizPvU/exec"
+  // Создаем FormData для отправки
+  const formData = new FormData();
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      formData.append(key, data[key]);
+    }
+  }
+
+  // Отправляем POST-запрос
+  fetch(scriptURL, {
+    method: 'POST',
+    body: formData,
+    // mode: 'no-cors' // НЕ добавляйте эту опцию, иначе не сможете прочитать ответ
+  })
+    .then(response => {
+      console.log("1");
+
+      // Проверяем, пришел ли JSON от сервера
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return response.json();
+      } else {
+        // Если пришел не JSON (например, HTML), пробуем прочитать как текст
+        return response.text().then(text => {
+          throw new Error('Сервер вернул не JSON: ' + text.substring(0, 100));
+        });
+      }
+    })
+    .then(data => {
+      console.log("2");
+      // Успешно - вызываем callback с результатом от сервера
       callback({
-        success: true,
-        message: "Заявка принята, мы свяжемся в течение 5 минут",
-      }),
-    500,
-  );
+        success: data.success || true,
+        message: data.message || 'Заявка отправлена'
+      });
+    })
+    .catch(error => {
+      console.log("3", error);
+      // Ошибка сети или обработки
+      console.error('Ошибка отправки:', error);
+      callback({
+        success: false,
+        message: 'Ошибка соединения. Попробуйте позже или свяжитесь с нами по телефону.'
+      });
+    });
 }
+
 
 // Вспомогательная очистка ошибок
 function clearErrors(formContainer) {
@@ -63,16 +119,6 @@ function clearErrors(formContainer) {
 function showFieldError(inputId, message) {
   const errorDiv = document.getElementById(inputId + "Error");
   if (errorDiv) errorDiv.textContent = message;
-}
-
-// Валидация имени
-function validateName(name, errorId) {
-  if (!name || name.length < 2) {
-    showFieldError(errorId, "Имя должно содержать не менее 2 символов");
-    return false;
-  }
-  showFieldError(errorId, "");
-  return true;
 }
 
 // ======================== Функции для работы с телефоном ========================
@@ -212,16 +258,14 @@ const modalForm = document.getElementById("modalForm");
 const modalMsg = document.getElementById("modalFormMsg");
 modalForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const name = document.getElementById("modalName").value.trim();
   const phoneInput = document.getElementById("modalPhone");
   const phone = phoneInput.value.trim();
-  const isNameValid = validateName(name, "modalName");
   const isPhoneValid = validatePhone(phone, "modalPhone");
-  if (!isNameValid || !isPhoneValid) return;
+  if (!isPhoneValid) return;
 
   // Отправляем очищенный номер
   const cleanPhone = getCleanPhoneForCRM(phone);
-  sendToCRM({ name, phone: cleanPhone, form: "modal" }, (res) => {
+  sendToBroker({ phone: cleanPhone, form: "modal" }, (res) => {
     modalMsg.textContent = res.message;
     modalMsg.className = "form-message " + (res.success ? "success" : "error");
     if (res.success) {
@@ -241,16 +285,14 @@ const footerForm = document.getElementById("contactFormFooter");
 const footerMsg = document.getElementById("footerFormMsg");
 footerForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const name = document.getElementById("footerName").value.trim();
   const phoneInput = document.getElementById("footerPhone");
   const phone = phoneInput.value.trim();
-  const isNameValid = validateName(name, "footerName");
   const isPhoneValid = validatePhone(phone, "footerPhone");
   const isConsentValid = validateConsent("footerConsent", "footerConsent");
-  if (!isNameValid || !isPhoneValid || !isConsentValid) return;
+  if (!isPhoneValid || !isConsentValid) return;
 
   const cleanPhone = getCleanPhoneForCRM(phone);
-  sendToCRM({ name, phone: cleanPhone, form: "footer" }, (res) => {
+  sendToBroker({ phone: cleanPhone, form: "footer" }, (res) => {
     footerMsg.textContent = res.message;
     footerMsg.className = "form-message " + (res.success ? "success" : "error");
     if (res.success) {
@@ -264,6 +306,85 @@ footerForm.addEventListener("submit", (e) => {
   });
 });
 
+// ======================== Автоматическая отправка при вводе 11 цифр ========================
+
+// Функция для автоматической отправки формы
+function autoSubmitForm(form, phoneInput, messageElement, errorId) {
+  if (!form || !phoneInput) return;
+
+  const phone = phoneInput.value.trim();
+  const digits = cleanPhoneNumber(phone);
+
+  if (digits.length === 11) {
+    const isValid = validatePhone(phone, errorId);
+
+    if (isValid) {
+      clearErrors(form);
+
+      const cleanPhone = getCleanPhoneForCRM(phone);
+      sendToBroker({ phone: cleanPhone, form: 'auto-submit' },
+        (res) => {
+          return
+          // if (messageElement) {
+          //   messageElement.textContent = res.message;
+          //   messageElement.className = 'form-message ' + (res.success ? 'success' : 'error');
+          // }
+          // if (res.success) {
+          //   form.reset();
+          //   setTimeout(() => {
+          //     if (messageElement) {
+          //       messageElement.textContent = '';
+          //       messageElement.className = 'form-message';
+          //     }
+          //     if (form.id === 'modalForm') {
+          //       closeModal();
+          //     }
+          //   }, 2000);
+          // }
+        }
+      );
+
+      return true;
+    }
+  }
+  return false;
+}
+
+// Настройка автоотправки для модальной формы
+const modalPhoneInput = document.getElementById('modalPhone');
+if (modalPhoneInput) {
+  modalPhoneInput.addEventListener('input', function () {
+    const digits = cleanPhoneNumber(this.value);
+    if (digits.length === 11) {
+      autoSubmitForm(
+        document.getElementById('modalForm'),
+        this,
+        document.getElementById('modalFormMsg'),
+        'modalPhone'
+      );
+    }
+  });
+}
+
+// Настройка автоотправки для футера
+const footerPhoneInput = document.getElementById('footerPhone');
+if (footerPhoneInput) {
+  footerPhoneInput.addEventListener('input', function () {
+    const digits = cleanPhoneNumber(this.value);
+    if (digits.length === 11) {
+      // const isConsentValid = validateConsent('footerConsent', 'footerConsent');
+      // if (true) {
+      autoSubmitForm(
+        document.getElementById('contactFormFooter'),
+        this,
+        document.getElementById('footerFormMsg'),
+        'footerPhone'
+      );
+      // }
+    }
+  });
+}
+
 // ======================== Форма чек-листа (email) ========================
 const checklistForm = document.getElementById("checklistForm");
 const checklistMsg = document.getElementById("checklistMsg");
@@ -274,7 +395,7 @@ if (checklistForm) {
     const isValid = validateEmail(email, "checklistEmail");
     if (!isValid) return;
 
-    sendToCRM({ email, form: "checklist" }, (res) => {
+    sendToBroker({ email, form: "checklist" }, (res) => {
       checklistMsg.textContent =
         res.message + " Ссылка на скачивание отправлена на email.";
       checklistMsg.className = "form-message success";
@@ -324,3 +445,14 @@ document.getElementById("partnerBtn")?.addEventListener("click", () => {
 
 // ======================== Заглушка для метрик ========================
 console.log("Яндекс.Метрика и Google Analytics можно установить позже");
+
+// ======================== Вспомогательная функция validateEmail ========================
+function validateEmail(email, errorId) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showFieldError(errorId, "Введите корректный email адрес");
+    return false;
+  }
+  showFieldError(errorId, "");
+  return true;
+}
