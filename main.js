@@ -1,7 +1,6 @@
 // ======================== Вкладки (Кейсы) ========================
 const caseTabs = document.querySelectorAll("#caseTabs .tab-btn");
 const casePanes = {
-  // "case-zaliv": document.getElementById("case-zaliv-pane"),
   "case-uk": document.getElementById("case-uk-pane"),
 };
 caseTabs.forEach((btn) => {
@@ -25,7 +24,7 @@ function closeModal() {
 }
 document
   .querySelectorAll(
-    ".consult-trigger, #consultBtnHeader, #heroFormBtn, #footerCallBtnFooter",
+    ".consult-trigger, #consultBtnHeader, #heroFormBtn, #footerCallBtnFooter, #partnerBtn"
   )
   .forEach((btn) => {
     btn.addEventListener("click", openModal);
@@ -40,18 +39,6 @@ setTimeout(() => {
   openModal();
 }, 20000);
 
-// ======================== Общая функция отправки (имитация Битрикс) ========================
-// function sendToBroker(data, callback) {
-//   console.log("Отправка:", data);
-//   setTimeout(
-//     () =>
-//       callback({
-//         success: true,
-//         message: "Заявка принята, мы свяжемся в течение 5 минут",
-//       }),
-//     500,
-//   );
-// }
 
 /**
  * Отправляет данные формы в Google Apps Script
@@ -159,9 +146,7 @@ function formatPhoneNumber(value) {
   let normalized = digits;
   if (normalized.startsWith("8")) {
     normalized = "7" + normalized.slice(1);
-  } else if (normalized.startsWith("7")) {
-    // уже норм
-  } else {
+  } else if (!normalized.startsWith("7")) {
     // если не начинается с 7 или 8, просто возвращаем как есть
     return value;
   }
@@ -170,45 +155,65 @@ function formatPhoneNumber(value) {
   let formatted = "+7";
 
   if (normalized.length > 1) {
-    formatted += " (" + normalized.slice(1, 4);
-  } else if (normalized.length === 1) {
-    formatted += " ";
+    formatted += " (" + normalized.slice(1, Math.min(4, normalized.length));
+    if (normalized.length < 4) {
+      return formatted; // Неполный код оператора
+    }
+  } else {
     return formatted;
   }
 
   if (normalized.length >= 4) {
-    formatted += ") " + normalized.slice(4, 7);
-  } else if (normalized.length > 1) {
-    formatted += ")";
-    return formatted;
-  }
-
-  if (normalized.length >= 7) {
-    formatted += "-" + normalized.slice(7, 9);
-  }
-
-  if (normalized.length >= 9) {
-    formatted += "-" + normalized.slice(9, 11);
+    formatted += ") ";
+    const remaining = normalized.slice(4);
+    // Добавляем цифры с дефисами
+    for (let i = 0; i < remaining.length; i++) {
+      if (i === 3 || i === 5) {
+        formatted += "-";
+      }
+      formatted += remaining[i];
+    }
   }
 
   return formatted;
 }
 
-// Автоформатирование при вводе
+// ОБНОВЛЕННАЯ: Автоформатирование при вводе
 function setupPhoneFormatting(inputElement) {
   if (!inputElement) return;
+
+  let previousValue = '';
 
   inputElement.addEventListener("input", function (e) {
     const cursorPosition = this.selectionStart;
     const rawValue = this.value;
     const digits = cleanPhoneNumber(rawValue);
 
+    // Определяем, было ли это удаление (backspace или delete)
+    const isDeletion = rawValue.length < previousValue.length;
+    previousValue = rawValue;
+
+    // Если удаление - не форматируем, чтобы не мешать
+    if (isDeletion) {
+      // Но всё равно нужно проверить, не осталось ли лишних символов
+      const cleanDigits = cleanPhoneNumber(rawValue);
+      // Если после удаления остались только цифры и +7 (но без пробелов) - оставляем как есть
+      if (cleanDigits.length > 0) {
+        // Проверяем, не нужно ли просто убрать лишние символы форматирования
+        const onlyDigits = cleanPhoneNumber(rawValue);
+        // Если пользователь удалил цифру, просто оставляем значение как есть
+        // (оно уже содержит правильное форматирование)
+        return;
+      }
+      return;
+    }
+
     // Если ввели 8, автоматически меняем на +7
     if (digits.length === 1 && digits.startsWith("8")) {
       // Ничего не делаем, дадим пользователю ввести 8, потом заменим
     }
 
-    // Форматируем
+    // Форматируем только при вводе новых символов
     const formatted = formatPhoneNumber(rawValue);
 
     // Обновляем значение, если оно изменилось
@@ -216,8 +221,7 @@ function setupPhoneFormatting(inputElement) {
       this.value = formatted;
 
       // Сохраняем позицию курсора
-      const newCursorPos =
-        cursorPosition + (formatted.length - rawValue.length);
+      const newCursorPos = cursorPosition + (formatted.length - rawValue.length);
       this.setSelectionRange(newCursorPos, newCursorPos);
     }
   });
@@ -435,13 +439,6 @@ burger.addEventListener("click", () => {
 // document.getElementById("logoLink")?.addEventListener("click", () => {
 //   window.scrollTo({ top: 0, behavior: "smooth" });
 // });
-
-// ======================== Кнопка "Стать партнёром" ========================
-document.getElementById("partnerBtn")?.addEventListener("click", () => {
-  alert(
-    "Спасибо за интерес! Скоро мы свяжемся с вами для оформления партнёрства.",
-  );
-});
 
 // ======================== Заглушка для метрик ========================
 console.log("Яндекс.Метрика и Google Analytics можно установить позже");
