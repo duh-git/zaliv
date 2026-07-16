@@ -1,3 +1,7 @@
+// Ваш URL из Apps Script
+const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw7NcguDr3Hx646jtX_5KvBZudmTkESZZpbZ8fODZYf-WRdsfHLpEJ2V0Ebu5tmttM/exec"
+
+
 // ======================== Вкладки (Кейсы) ========================
 const caseTabs = document.querySelectorAll("#caseTabs .tab-btn");
 const casePanes = {
@@ -46,8 +50,6 @@ setTimeout(() => {
  * @param {Function} callback - функция, которая получит результат {success, message}
  */
 function sendToBroker(data, callback) {
-  // Ваш URL из Apps Script
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxVs72rpF130_CR4YSt3rIAx5Ye-bc7fooW47vlS4F8J0--E8i42axSxoyHXEizPvU/exec"
   // Создаем FormData для отправки
   const formData = new FormData();
   for (const key in data) {
@@ -57,7 +59,7 @@ function sendToBroker(data, callback) {
   }
 
   // Отправляем POST-запрос
-  fetch(scriptURL, {
+  fetch(APP_SCRIPT_URL, {
     method: 'POST',
     body: formData,
     // mode: 'no-cors' // НЕ добавляйте эту опцию, иначе не сможете прочитать ответ
