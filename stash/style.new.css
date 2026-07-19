@@ -1,0 +1,154 @@
+:root {
+  font-size: 62.5%;
+
+  --primary: #2a5c9a;
+  --primary-dark: #1e3e6e;
+  --accent: #f5a623;
+  --accent-hover: #e09612;
+  --gray-100: #f8fafc;
+  --gray-200: #e0e0e0;
+  --gray-300: #cbd5e1;
+  --gray-800: #1e293b;
+  --shadow:
+    0 15px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #ffffff;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  border: none;
+  background: none;
+  font-size: inherit;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #ffffff;
+
+  padding: 14px 44px;
+
+  font-size: 1.6rem;
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    b {
+      color: var(--accent);
+    }
+  }
+
+  nav {
+    white-space: nowrap;
+
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    margin: 0 32px;
+
+    ul {
+      display: contents;
+    }
+  }
+
+  .contacts {
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+
+    li {
+      a {
+        display: flex;
+        align-items: center;
+        margin: 0 5px;
+        fill: var(--primary);
+      }
+
+      a[href^="tel:"] {
+        margin-right: 10px;
+        fill: var(--accent);
+      }
+
+      button {
+        white-space: wrap;
+        margin-left: 10px;
+
+        background-color: var(--accent);
+        color: var(--primary-dark);
+        font-weight: bold;
+        padding: 8px 14px;
+        border-radius: 24px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 10px 20px;
+    /* font-size: 1.4rem; */
+
+    /* .logo img {
+      width: 32px;
+    } */
+
+    /* .contacts {
+      img {
+        width: 15px;
+      }
+    } */
+  }
+}
+
+
+@media (max-width: 1080px) {
+  header {
+    flex-wrap: wrap;
+
+    nav {
+      order: 3;
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+}
+
+section {
+  scroll-margin-top: 100px;
+}
