@@ -30,7 +30,7 @@ body {
   font-family: "Inter", sans-serif;
   background-color: #ffffff;
   color: #1e293b;
-  line-height: 1.5;
+  line-height: 1.25;
 }
 
 a {
@@ -49,14 +49,17 @@ button {
 }
 
 header {
-  position: sticky;
+  position: fixed;
+  left: 0;
   top: 0;
+  width: 100%;
   z-index: 1000;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
   background-color: #ffffff;
 
   padding: 14px 44px;
@@ -64,6 +67,7 @@ header {
   font-size: 1.6rem;
 
   .logo {
+    font-size: 2rem;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -76,13 +80,12 @@ header {
   nav {
     white-space: nowrap;
 
-    display: flex;
-    justify-content: space-between;
-    width: 40%;
-    margin: 0 32px;
-
     ul {
-      display: contents;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 24px;
+      gap: 14px;
     }
   }
 
@@ -116,29 +119,97 @@ header {
         border-radius: 24px;
       }
     }
+
+    .wrapper {
+      display: contents;
+    }
   }
+}
+
+.hero {
+  position: relative;
+  padding-top: 80px;
+  padding-bottom: 220px;
+  background-image: url("/static/rain&house-no-contrast-2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  margin-top: 60px;
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    width: min(100%, 650px);
+  }
+
+  p {
+    font-size: 1.9rem;
+    margin-bottom: 32px;
+    width: min(100%, 650px);
+
+    b {
+      color: var(--accent);
+    }
+  }
+
+  button {
+    font-size: 1.5rem;
+    background-color: var(--accent);
+    color: var(--primary-dark);
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-weight: bold;
+  }
+}
+
+section {
+  margin: 0 auto;
+  padding: 70px 24px;
+
 }
 
 @media (max-width: 768px) {
   header {
-    padding: 10px 20px;
-    /* font-size: 1.4rem; */
 
-    /* .logo img {
-      width: 32px;
-    } */
+    nav,
+    .contacts {
+      display: none;
+    }
 
-    /* .contacts {
-      img {
-        width: 15px;
+    nav[open],
+    .contacts[open] {
+      display: flex;
+    }
+
+    nav ul {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .contacts {
+      order: 4;
+      width: 100%;
+      margin-top: 18px;
+      flex-direction: column;
+      gap: 5px;
+
+      .wrapper {
+        display: flex;
       }
-    } */
+    }
+
+    .burger {
+      display: block;
+    }
   }
 }
 
 
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
   header {
+    font-size: 1.4rem;
+    padding: 10px 20px;
     flex-wrap: wrap;
 
     nav {
@@ -147,8 +218,17 @@ header {
       width: 100%;
     }
   }
+
+  .hero {
+    padding-bottom: 160px;
+
+  }
+
+  section {
+    scroll-margin-top: 0;
+  }
 }
 
 section {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 50px;
 }
